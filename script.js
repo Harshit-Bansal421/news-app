@@ -7,7 +7,7 @@ async function fetchNews(topic = "world") {
 
   try {
     const response = await fetch(
-      `https://gnews.io/api/v4/top-headlines?category=${category}&lang=en&country=us&apikey=${apiKey}`
+      `https://gnews.io/api/v4/top-headlines?topic=${topic}&lang=en&apikey=${apiKey}`
     );
 
     const data = await response.json();
@@ -25,18 +25,12 @@ async function fetchNews(topic = "world") {
         "bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-transform transform hover:-translate-y-1 duration-300";
 
       card.innerHTML = `
-        <img src="${
-          article.image || "https://via.placeholder.com/400x200?text=No+Image"
-        }" 
+        <img src="${article.image || "https://via.placeholder.com/400x200?text=No+Image"}" 
              alt="news image" 
              class="w-full h-48 object-cover" />
         <div class="p-4">
-          <h3 class="font-semibold text-lg mb-2 line-clamp-2">${
-            article.title
-          }</h3>
-          <p class="text-sm text-gray-600 mb-3 line-clamp-3">${
-            article.description || ""
-          }</p>
+          <h3 class="font-semibold text-lg mb-2 line-clamp-2">${article.title}</h3>
+          <p class="text-sm text-gray-600 mb-3 line-clamp-3">${article.description || ""}</p>
           <div class="flex justify-between items-center text-sm text-gray-500">
             <span>${article.source.name || "Unknown"}</span>
             <a href="${article.url}" target="_blank" 
@@ -49,7 +43,8 @@ async function fetchNews(topic = "world") {
     });
   } catch (error) {
     console.error("Error fetching news:", error);
-    newsContainer.innerHTML = `<p class="text-center text-red-600 text-lg">Failed to load news. Please try again later.</p>`;
+    newsContainer.innerHTML =
+      `<p class="text-center text-red-600 text-lg">Failed to load news. Please try again later.</p>`;
   }
 }
 
